@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+</head>
+<body>
+    <h2>Contact Us</h2>
+    <form>
+        <label for="fullname">Full Name:</label><br>
+        <input type="text" id="fullname" name="fullname" placeholder="Your Name" required><br><br>
+
+        <label for="email">Email Address:</label><br>
+        <input type="email" id="email" name="email" placeholder="example@domain.com" required><br><br>
+
+        <label for="phone">Phone Number:</label><br>
+        <input type="tel" id="phone" name="phone" placeholder="0123456789" required><br><br>
+
+        <p>preferred contact method:</p>
+        <input type="radio" id="contact_phone" name="preferred" value="Phone">
+        <label for="contact_phone">Phone</label>
+
+        <input type="radio" id="contact_email" name="preferred" value="Email">
+        <label for="contact_email">Email</label><br><br>
+
+        <p>services interested in:</p>
+        <input type="checkbox" id="web_design" name="services" value="Web Design">
+        <label for="web_design">Web Design</label>
+        <input type="checkbox" id="seo" name="services" value="SEO">
+        <label for="seo">SEO</label>
+        <input type="checkbox" id="hosting" name="services" value="Hosting">
+        <label for="hosting">Hosting</label><br><br>
+
+<p>preferred contact method:</p>
+        <input type="radio" id="contact_phone" name="prefer_phone" value="Phone">
+        <label for="contact_phone">Phone</label>
+
+        <input type="radio" id="contact_email" name="prefer_mail" value="Email">
+        <label for="contact_email">Email</label><br><br>
+
+<label for="city">City:</label><br>
+<select id="city" name="city" required>
+    <option value="" disabled selected>--Select City--</option>
+    <option value="cairo">Cairo</option>
+    <option value="alexandria">Alexandria</option>
+</select>
+<p>        </p>
+<label for="message">Your Message:</label><br>
+<textarea id="message" name="message" rows="5" cols="30" placeholder="Write your message here...."></textarea>
+<p>     </p>
+<input type="submit" value="send message">
+ </form>
+
+</body>
+</html>
