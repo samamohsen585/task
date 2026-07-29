@@ -1,0 +1,39 @@
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: hwb(240 96% 2% / 0.989);
+  font-family: sans-serif;
+}
+.badge{
+border: 3px solid rgb(223, 219, 219);
+border-radius: 8px;
+padding: 2px 2px ;
+margin:auto;
+background-color :rgb(223, 219, 219);
+color :black;
+font-family: serif;
+font-weight: bold;
+}
+.frame{
+border :1px solid rgb(158, 157, 157);
+border-radius: 18px;
+padding: 20px;
+width: 250px;
+background-color: #ffffff;
+}
+.image-container img {
+  width: 100%;
+  border-radius: 12px;
+  
+}
+.name{
+font-family: serif;
+  font-size: 28px; 
+  font-weight: bold;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
