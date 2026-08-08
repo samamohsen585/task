@@ -1,0 +1,65 @@
+body {
+  background-color: #000000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+.stage {
+  width: 400px;
+  height: 250px;
+  border: 3px solid #882a32;
+  border-radius: 17px;
+  justify-content: center;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 20px;
+  background-color: #080929;
+}
+.emoji {
+  font-size: 45px; 
+  display: inline-block;  
+}
+@keyframes dance {
+  0% {
+     transform: rotate(-15deg); 
+    }
+  100% { 
+    transform: rotate(15deg); 
+       }
+}
+@keyframes bounce {
+ 0% { transform: translateY(0); }
+100% { transform: translateY(-18px); }
+}
+@keyframes vibrate {
+  0%   { transform: translate(0, 0); }
+  25%  { transform: translate(-3px, 0); }
+  50%  { transform: translate(3px, 0); }  
+  75%  { transform: translate(-3px, 0); } 
+  100% { transform: translate(0, 0); }
+}
+.dancer1 {
+      animation-name: dance ;
+      animation-duration: 0.5s;
+      animation-iteration-count: infinite;
+      animation-direction: alternate;
+      animation-timing-function: ease-in-out;
+}
+.dancer2 {
+  animation-name: bounce;
+  animation-duration: 0.4s;
+  animation-iteration-count:  infinite;
+  animation-direction:  alternate;
+  animation-timing-function:ease-in-out;
+  animation-delay: 0.15s;
+}
+.drum {
+  animation-name: vibrate;
+  animation-duration: 0.4s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-timing-function: ease-in-out;
+  animation-delay: 0.3s;
+}

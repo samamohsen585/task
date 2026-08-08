@@ -1,0 +1,38 @@
+body {
+    background-color: #1a041e;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+.container {
+    text-align: center;
+}
+#flying-saucer {
+    font-size: 50px;
+    margin-bottom: 20px;
+    transition: transform 0.3s;
+}
+#launchBtn {
+    padding: 10px 20px;
+    background-color: #e3e086;
+    color: rgb(9, 0, 0);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+}
+.fly {
+    animation: launchRocket 1.5s forwards ease-in;
+}
+@keyframes launchRocket {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-500px); 
+        opacity: 0;   
+    }
+}
