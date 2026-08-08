@@ -1,95 +1,56 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using StudentManagement.Api.Dtos;
+using StudentManagement.Api.Services;
+
 namespace StudentManagement.Api.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class StudentsController : ControllerBase
     {
-        
-        [HttpGet("welcome")]
-        public IActionResult Welcome()
+        private readonly IStudentService _studentService;
+
+        public StudentsController(IStudentService studentService)
         {
-            return Ok("Welcome to Student Management API");
+            _studentService = studentService;
         }
-        private static List<Student> students = new List<Student>
-        {
-            new Student { Id = 1, Name = "Ahmed", Age = 20, DepartmentName="IS" },
-            new Student { Id = 2, Name = "Sama", Age = 22, DepartmentName="CS" }
-        };
+
         [HttpGet]
-        public IActionResult GetAll()
-        {
-            return Ok(students);
-        }
-        [HttpGet("{id:int}")]
+        public IActionResult GetAll() => Ok(_studentService.GetAll());
+
+        [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            var student = students.FirstOrDefault(s => s.Id == id);
-            if (student == null)
-            {
-                return NotFound($"Student with ID {id} was not found");
-            }
-            return Ok(student);
+            var student = _studentService.GetById(id);
+            return student == null ? NotFound("Student not found.") : Ok(student);
         }
-        [HttpGet("search")]
-        public IActionResult SearchByName([FromQuery] string name)
-        {
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                return BadRequest("Name parameter is required");
-            }
-            var result = students
-                .Where(s => s.Name.Contains(name, StringComparison.OrdinalIgnoreCase))
-                .ToList();
-            return Ok(result);
-        }
-        [HttpGet("filter-by-age")]
-        public IActionResult FilterByAge()
-        {
-            var result = students
-                .Where(s => s.Age >= 18 && s.Age <= 22)
-                .OrderBy(s => s.Age)
-                .ToList();
-            return Ok(result);
-        }
+
         [HttpPost]
-        public IActionResult AddStudent([FromBody] Student newStudent)
+        public IActionResult Add([FromBody] CreateStudentDto dto)
         {
-            if (newStudent == null || string.IsNullOrWhiteSpace(newStudent.Name))
-            {
-                return BadRequest("Invalid student data");
-            }
-            newStudent.Id = students.Any() ? students.Max(s => s.Id) + 1 : 1;
-            students.Add(newStudent);
-            return CreatedAtAction(nameof(GetById), new { id = newStudent.Id }, newStudent);
+            var result = _studentService.Add(dto);
+            if (!result.Success) return BadRequest(result.Message);
+            return CreatedAtAction(nameof(GetById), new { id = result.Student!.Id }, result.Student);
         }
-        [HttpPut("{id:int}")]
-        public IActionResult UpdateStudent(int id, [FromBody] Student updatedStudent)
+
+        [HttpPut("{id}")]
+        public IActionResult Update(int id, [FromBody] UpdateStudentDto dto)
         {
-            var existingStudent = students.FirstOrDefault(s => s.Id == id);
-            if (existingStudent == null)
-            {
-                return NotFound($"Student with ID {id} was not found");
-            }
-            if (updatedStudent == null || string.IsNullOrWhiteSpace(updatedStudent.Name))
-            {
-                return BadRequest("Invalid student data");
-            }
-            existingStudent.Name = updatedStudent.Name;
-            existingStudent.Age = updatedStudent.Age;
-            existingStudent.DepartmentName = updatedStudent.DepartmentName;
-            return Ok(existingStudent);
+            var result = _studentService.Update(id, dto);
+            if (!result.Success) return BadRequest(result.Message);
+            return NoContent();
         }
-        [HttpDelete("{id:int}")]
-        public IActionResult DeleteStudent(int id)
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
         {
-            var student = students.FirstOrDefault(s => s.Id == id);
-            if (student == null)
-            {
-                return NotFound($"Student with ID {id} was not found");
-            }
-            students.Remove(student);
-            return Ok(new { message = $"Student with ID {id} has been deleted successfully" });
+            return _studentService.Delete(id) ? NoContent() : NotFound("Student not found.");
         }
-    } 
+
+        [HttpGet("search")]
+        public IActionResult SearchByName([FromQuery] string name) => Ok(_studentService.SearchByName(name));
+
+        [HttpGet("age-range")]
+        public IActionResult GetByAgeRange() => Ok(_studentService.GetStudentsBetween18And22());
+    }
 }
